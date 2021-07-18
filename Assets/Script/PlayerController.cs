@@ -5,24 +5,31 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed;
+
     public float jumpForce;
 
     public int jumpsAmount;
+
     int jumpsLeft;
+
     public Transform GroundCheck;
+
     public LayerMask GroundLayer;
 
     bool isGrounded;
 
     float moveInput;
-    Rigidbody2D rb2d;
-    float scaleX;
-    // Start is called before the first frame update
 
+    Rigidbody2D rb2d;
+
+    float scaleX;
+
+    // Start is called before the first frame update
     private Animator anim;
+
     void Start()
     {
-        anim= GetComponent<Animator>();
+        anim = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         scaleX = transform.localScale.x;
     }
@@ -32,13 +39,14 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = Input.GetAxisRaw("Horizontal");
         Jump();
-        if(moveInput==0){
+        if (moveInput == 0)
+        {
             anim.SetBool("isWalking", false);
         }
-        else{
-            anim.SetBool("isWalking",true);
+        else
+        {
+            anim.SetBool("isWalking", true);
         }
-        
     }
 
     private void FixedUpdate()
@@ -56,18 +64,24 @@ public class PlayerController : MonoBehaviour
     {
         if (moveInput > 0)
         {
-            transform.localScale = new Vector3(scaleX, transform.localScale.y, transform.localScale.z);
+            transform.localScale =
+                new Vector3(scaleX,
+                    transform.localScale.y,
+                    transform.localScale.z);
         }
         if (moveInput < 0)
         {
-            transform.localScale = new Vector3((-1)*scaleX, transform.localScale.y, transform.localScale.z);
+            transform.localScale =
+                new Vector3((-1) * scaleX,
+                    transform.localScale.y,
+                    transform.localScale.z);
         }
     }
 
     public void Jump()
     {
-        
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.UpArrow)
+        )
         {
             CheckIfGrounded();
             if (jumpsLeft > 0)
@@ -75,14 +89,16 @@ public class PlayerController : MonoBehaviour
                 rb2d.velocity = new Vector2(rb2d.velocity.x, jumpForce);
                 jumpsLeft--;
             }
-                               
         }
-        
     }
 
     public void CheckIfGrounded()
     {
-        isGrounded = Physics2D.OverlapCircle(GroundCheck.position, GroundCheck.GetComponent<CircleCollider2D>().radius, GroundLayer);
+        isGrounded =
+            Physics2D
+                .OverlapCircle(GroundCheck.position,
+                GroundCheck.GetComponent<CircleCollider2D>().radius,
+                GroundLayer);
         ResetJumps();
     }
 
@@ -90,9 +106,7 @@ public class PlayerController : MonoBehaviour
     {
         if (isGrounded)
         {
-            jumpsLeft = jumpsAmount;// jumpsAmount =2;
+            jumpsLeft = jumpsAmount; // jumpsAmount =2;
         }
     }
-
-
 }
