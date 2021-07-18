@@ -1,15 +1,30 @@
 using System.Collections;
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine;
+//we need to add this library if we use UI
+using UnityEngine.UI;
 
 public class CoinCollect : MonoBehaviour
 {
-    void OnTriggerEnter2D(Collider2D col)
+    //variable for coin counter
+    public int coin;
+
+    //will be started once at beginn
+    void Start()
     {
-        if (col.gameObject.tag == "Coin")
+    }
+
+    //will be startet, if collider2D went into the trigger
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        //check, if gameobject has tag Coin
+        if (other.tag == "Coin")
         {
-            Destroy (gameObject);
+            //increment the coin counter variable
+            coin = coin + 1;
+
+            //delete coin gameobject from the scene
+            Destroy(other.gameObject);
         }
     }
 }
